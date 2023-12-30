@@ -2,14 +2,15 @@
 #include "zcl_include.h"
 
 #include "watermeter.h"
+#include "lcd.h"
 
 #define DEBOUNCE_COUNTER    32                          /* number of polls for debounce       */
 
 static water_counter_t hot_counter;
 static water_counter_t cold_counter;
 
-uint32_t check_counter_overflow(uint32_t check_count) {
-    uint32_t count;
+u32 check_counter_overflow(u32 check_count) {
+    u32 count;
 
     if (check_count >= COUNTERS_OVERFLOW) {
         count = check_count - COUNTERS_OVERFLOW;
@@ -140,6 +141,11 @@ uint8_t counters_handler() {
     }
 
     if (save_config) {
+        u32 hot = (u32)g_zcl_watermeterAttrs.hot_water_counter;
+        u32 cold = (u32)g_zcl_watermeterAttrs.cold_water_counter;
+        show_big_number(cold % 1000, 0);
+        show_small_number(hot % 100, 0);
+        update_lcd();        
         write_config();
         zb_setPollRate(g_watermeterCtx.short_poll);
         if (g_watermeterCtx.timerPollRateEvt) {

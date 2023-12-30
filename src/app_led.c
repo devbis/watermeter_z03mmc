@@ -15,18 +15,17 @@ void led_off(uint32_t pin)
 
 void light_on(void)
 {
-    led_on(LED1);
+    //led_on(LED1);
 }
 
 void light_off(void)
 {
-    led_off(LED1);
+    //led_off(LED1);
 }
 
 void light_init(void)
 {
-    led_off(LED1);
-
+    //led_off(LED1);
 }
 
 int32_t zclLightTimerCb(void *arg)

@@ -3,6 +3,7 @@
 #include "ota.h"
 
 #include "watermeter.h"
+#include "lcd.h"
 
 static uint32_t last_light = 0;
 
@@ -249,6 +250,9 @@ void user_init(bool isRetention)
         ev_on_poll(EV_POLL_HCI, zbhciTask);
 #endif
         ev_on_poll(EV_POLL_IDLE, app_task);
+        
+        init_lcd(true);
+        show_zigbe();
 
         /* Load the pre-install code from flash */
         if(bdb_preInstallCodeLoad(&g_watermeterCtx.tcLinkKey.keyType, g_watermeterCtx.tcLinkKey.key) == RET_OK){
